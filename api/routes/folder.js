@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-export default function handler(req, res) {
+ function handler1(req, res) {
   const { path: basePath } = req.query;
 
   if (!basePath || typeof basePath !== 'string') {
@@ -49,3 +49,13 @@ function getFolderTree(dirPath) {
 
   return result;
 }
+
+const booksRouter = new Hono();
+
+// Books list endpoint with filtering and sorting
+booksRouter.get("/", async (c) => {
+     const res1 = handler1(c.req,c.res); 
+      return Response.json(res1);    
+});
+
+export default booksRouter;
