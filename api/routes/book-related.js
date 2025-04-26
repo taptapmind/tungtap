@@ -17,7 +17,7 @@ bookRelatedRouter.get("/", async (c) => {
   const dbLogic = async (c) => {
     const sql = c.env.DB;
 
-    const book = await sql.prepare`SELECT * FROM books WHERE id = ${bookId}`.all();
+    const book = await sql.prepare`SELECT * FROM books WHERE id = ${bookId}`.all()?.results;
 
     if (book.length === 0) {
       return Response.json({ error: "Book not found" }, { status: 404 });
@@ -32,19 +32,19 @@ bookRelatedRouter.get("/", async (c) => {
     relatedBooks = await sql.prepare`
       SELECT * FROM books 
       WHERE genre = ${bookGenre} AND id != ${bookId}
-      LIMIT 3`.all();
+      LIMIT 3`.all()?.results;
 
     genreCounts = await sql.prepare`
       SELECT genre, COUNT(*) as count 
       FROM books 
       GROUP BY genre 
-      ORDER BY count DESC`.all();
+      ORDER BY count DESC`.all()?.results;
 
     recentBooks = await sql.prepare`
       SELECT * FROM books 
       WHERE id != ${bookId} 
       ORDER BY created_at DESC 
-      LIMIT 2`.all();
+      LIMIT 2`.all()?.results;
 
     return Response.json({
       bookId: bookId,
