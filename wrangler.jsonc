@@ -20,8 +20,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_id": "b732257c-1afa-4eaf-a10d-05e989985bd2",
-      "database_name": "vibedb"
+      "database_id": "543430da-7d6b-4b37-be11-fdfe447f516a",
+      "database_name": "tungsqlite"
     }
   ],
   "observability": {
