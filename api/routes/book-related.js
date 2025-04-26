@@ -15,9 +15,9 @@ bookRelatedRouter.get("/", async (c) => {
 
   // Database logic
   const dbLogic = async (c) => {
-    const sql = c.env.SQL;
+    const sql = c.env.DB;
 
-    const book = await sql`SELECT * FROM public.books WHERE id = ${bookId}`;
+    const book = await sql.prepare`SELECT * FROM books WHERE id = ${bookId}`.all();
 
     if (book.length === 0) {
       return Response.json({ error: "Book not found" }, { status: 404 });
@@ -29,22 +29,22 @@ bookRelatedRouter.get("/", async (c) => {
 
     const bookGenre = book[0].genre;
 
-    relatedBooks = await sql`
-      SELECT * FROM public.books 
+    relatedBooks = await sql.prepare`
+      SELECT * FROM books 
       WHERE genre = ${bookGenre} AND id != ${bookId}
-      LIMIT 3`;
+      LIMIT 3`.all();
 
-    genreCounts = await sql`
+    genreCounts = await sql.prepare`
       SELECT genre, COUNT(*) as count 
-      FROM public.books 
+      FROM books 
       GROUP BY genre 
-      ORDER BY count DESC`;
+      ORDER BY count DESC`.all();
 
-    recentBooks = await sql`
-      SELECT * FROM public.books 
+    recentBooks = await sql.prepare`
+      SELECT * FROM books 
       WHERE id != ${bookId} 
       ORDER BY created_at DESC 
-      LIMIT 2`;
+      LIMIT 2`.all();
 
     return Response.json({
       bookId: bookId,
