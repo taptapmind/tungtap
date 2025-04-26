@@ -15,12 +15,14 @@ booksRouter.get("/", async (c) => {
 
   // Database logic
   const dbLogic = async (c) => {
-    const sql = c.env.SQL;
-    let query = sql`SELECT * FROM public.books`;
+    const sql = c.env.DB;
+       // const stmt = env.DB.prepare("SELECT * FROM comments LIMIT 30");
+    //const { results } = await stmt.all();
+    let query =  await sql.prepare`SELECT * FROM books`.all()
 
     // Apply genre filter if provided
     if (genre) {
-      query = sql`SELECT * FROM public.books WHERE genre = ${genre}`;
+      query =  await sql.prepare`SELECT * FROM books WHERE genre = ${genre}`.all()
     }
 
     // Apply sorting if provided
@@ -28,23 +30,23 @@ booksRouter.get("/", async (c) => {
       switch (sort) {
         case "title_asc":
           query = genre
-            ? sql`SELECT * FROM public.books WHERE genre = ${genre} ORDER BY title ASC`
-            : sql`SELECT * FROM public.books ORDER BY title ASC`;
+            ?  await sql.prepare`SELECT * FROM books WHERE genre = ${genre} ORDER BY title ASC`.all()
+            :  await sql.prepare`SELECT * FROM books ORDER BY title ASC`.all()
           break;
         case "title_desc":
           query = genre
-            ? sql`SELECT * FROM public.books WHERE genre = ${genre} ORDER BY title DESC`
-            : sql`SELECT * FROM public.books ORDER BY title DESC`;
+            ?  await sql.prepare`SELECT * FROM books WHERE genre = ${genre} ORDER BY title DESC`.all()
+            :  await sql.prepare`SELECT * FROM books ORDER BY title DESC`.all()
           break;
         case "author_asc":
           query = genre
-            ? sql`SELECT * FROM public.books WHERE genre = ${genre} ORDER BY author ASC`
-            : sql`SELECT * FROM public.books ORDER BY author ASC`;
+            ?  await sql.prepare`SELECT * FROM books WHERE genre = ${genre} ORDER BY author ASC`.all()
+            :  await sql.prepare`SELECT * FROM books ORDER BY author ASC`.all()
           break;
         case "author_desc":
           query = genre
-            ? sql`SELECT * FROM public.books WHERE genre = ${genre} ORDER BY author DESC`
-            : sql`SELECT * FROM public.books ORDER BY author DESC`;
+            ?  await sql.prepare`SELECT * FROM books WHERE genre = ${genre} ORDER BY author DESC`.all()
+            :  await sql.prepare`SELECT * FROM books ORDER BY author DESC`.all()
           break;
         default:
           // Default sort, no change to query needed
@@ -76,10 +78,10 @@ booksRouter.get("/:id", async (c) => {
 
   // Database logic
   const dbLogic = async (c) => {
-    const sql = c.env.SQL;
+    const sql = c.env.DB;
 
     // Get the specific book by ID
-    const book = await sql`SELECT * FROM public.books WHERE id = ${bookId}`;
+    const book = await sql.prepare`SELECT * FROM books WHERE id = ${bookId}`.all()
 
     if (book.length === 0) {
       return Response.json({ error: "Book not found" }, { status: 404 });
