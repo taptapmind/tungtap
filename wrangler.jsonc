@@ -16,15 +16,17 @@
   },
   // Hyperdrive binding is optional - if not provided, app will use mock data
   // To enable Hyperdrive, uncomment and configure properly:
-  /*
-    "hyperdrive": [
-      {
-        "binding": "HYPERDRIVE",
-        "id": "YOUR_HYPERDRIVE_ID",
-        "localConnectionString": "postgresql://myuser:mypassword@localhost:5432/mydatabase"
-      }
-    ],
-    */
+ 
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_id": "b732257c-1afa-4eaf-a10d-05e989985bd2",
+      "database_name": "vibedb"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
   "placement": {
     "mode": "smart",
   },
