@@ -30,12 +30,12 @@ function App() {
         }
         const data = await response.json();
 
-        if (!data.books?.results?.length) {
+        if (!data.books?.length) {
           console.error("No books data found:", typeof data);
           return;
         }
 
-        const booksArray = data.books?.results;
+        const booksArray = data.books;
 
         // Check if using mock data or database
         if (data.source) {
