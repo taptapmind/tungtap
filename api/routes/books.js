@@ -59,7 +59,7 @@ booksRouter.get("/", async (c) => {
 
     // Return results
     return Response.json({
-      books: results,
+      books: results.results,
       source: "database",
     });
   };
