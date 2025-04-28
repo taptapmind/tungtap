@@ -61,7 +61,14 @@ booksRouter.get("/", async (c) => {
     return Response.json({
       books: results.results,
       source: "database",
-    });
+    },  {
+  headers: {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*", // hoặc chỉ định domain cụ thể
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type"
+  }
+});
   };
 
   return selectDataSource(c, dbLogic, mockLogic);
