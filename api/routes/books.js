@@ -63,10 +63,11 @@ booksRouter.get("/", async (c) => {
       source: "database",
     },  {
   headers: {
+'Referrer-Policy: no-referrer',
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*", // hoặc chỉ định domain cụ thể
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type"
+    "Access-Control-Allow-Headers": "Content-Type, Authorization"
   }
 });
   };
