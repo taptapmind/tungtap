@@ -63,7 +63,7 @@ booksRouter.get("/", async (c) => {
       source: "database",
     },  {
   headers: {
-'Referrer-Policy: no-referrer',
+'Referrer-Policy': 'no-referrer',
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*", // hoặc chỉ định domain cụ thể
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
